@@ -20,7 +20,7 @@ word = wordClues[computerChoice];
 picture = pictureClues[computerChoice];
 
 document.querySelector("#word").innerHTML = word;
-document.querySelector("#image").innerHTML = picture;
+document.querySelector("#image").appendChild(picture);
 
 //set a variable blanks to the length of the word that we need to blank out
 var blanks = word.length
