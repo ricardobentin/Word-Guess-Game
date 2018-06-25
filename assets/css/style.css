@@ -1,0 +1,43 @@
+body {
+    background-image: url(../images/worldmap.jpg);
+}
+
+#clues{
+    margin: 0 auto;
+    position: relative;
+    background-color: rgb(165, 165, 146);
+    max-width: 960px;
+    align-content: center;
+}
+#word {
+    margin: 0 auto;
+    position: relative;
+    padding: 20px;
+    text-align: center;
+    font-weight: bolder;
+    width: 400px;
+    justify-content: center;
+}
+#image {
+    margin: 0 auto;
+    position: relative;
+    padding: 20px;
+    width: 300px;
+    justify-content: center;
+}
+
+img {
+    position: relative;
+    width: 100%;
+}
+
+#stats{
+    margin: 0 auto;
+    position: relative;
+    background-color: rgb(165, 165, 146);
+    max-width: 960px;
+    justify-content: right; 
+}
+p{
+    text-align: center;
+}

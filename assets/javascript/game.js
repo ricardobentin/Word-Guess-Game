@@ -36,7 +36,7 @@ var word;
 var picture;
 var computerChoice = [];
 var wins = 0;
-var guessesLeft = 9;
+var guessesLeft = 15;
 var hiddenWord = [];
 var guessedLetters = [];
 
@@ -85,31 +85,38 @@ document.onkeyup = function (event) {
     document.querySelector("#image").appendChild(picture);
     //Conditional for wins!
     if (remainingLetters === 0 && guessesLeft > 0) {
+        alert("You are correct! The flag is from "+word+"! Press OK to play again!")
         wins++;
         document.querySelector("#wins").innerHTML = "Wins: " + wins;
-        //reset game
-
+        //reset game logic
+        //clear the page
+        document.querySelector("#word").innerHTML = "";
+        document.querySelector("#image").removeChild(picture);
+        //clear variables
+        computerChoice = [];
+        guessesLeft = 15;
+        hiddenWord = [];
+        guessedLetters = [];
+        remainingLetters = 0
+        remainingLetters = 0
+        document.querySelector("#guesses").innerHTML = "Guesses Left: " + guessesLeft;
+        document.querySelector("#guessedLetters").innerHTML = "So far, you have guessed: " + guessedLetters;
+        //computer needs to guess again
         //logic for the computer to guess between the items in wordClues and PictureClues arrays randomly
         computerGuess = Math.floor(Math.random() * pictureClues.length);
         computerChoice.push(computerGuess);
-
         //set the wordclues and pictureClues to the index set by computerGuess
-
         word = wordClues[computerChoice];
         picture = pictureClues[computerChoice];
-
-
         //for loop to get the length of the word and replace it with a _
         for (var i = 0; i < word.length; i++) {
             hiddenWord[i] = "_";
         }
         //variable to track how many letters remain to be guessed by user
         remainingLetters = word.length;
-
         //print the hidden word and the picture clue to the page
         document.querySelector("#word").innerHTML = hiddenWord.join(" ");
         document.querySelector("#image").appendChild(picture);
-
     }
     //conditional to decrement guesses
     else if (remainingLetters !== 0 && guessesLeft > 1) {
@@ -118,30 +125,26 @@ document.onkeyup = function (event) {
     }
     else {
         alert("I'm sorry, You did not guess correctly. Press OK to play again!")
+        //reset game logic
         //clear the page
-        document.querySelector("#word").innerHTML="";
+        document.querySelector("#word").innerHTML = "";
         document.querySelector("#image").removeChild(picture);
         //clear variables
         computerChoice = [];
-        wins = 0;
-        guessesLeft = 9;
+        guessesLeft = 15;
         hiddenWord = [];
         guessedLetters = [];
         remainingLetters = 0
         remainingLetters = 0
         document.querySelector("#guesses").innerHTML = "Guesses Left: " + guessesLeft;
         document.querySelector("#guessedLetters").innerHTML = "So far, you have guessed: " + guessedLetters;
-
+        //computer needs to guess again
         //logic for the computer to guess between the items in wordClues and PictureClues arrays randomly
         computerGuess = Math.floor(Math.random() * pictureClues.length);
         computerChoice.push(computerGuess);
-
         //set the wordclues and pictureClues to the index set by computerGuess
-
         word = wordClues[computerChoice];
         picture = pictureClues[computerChoice];
-
-
         //for loop to get the length of the word and replace it with a _
         for (var i = 0; i < word.length; i++) {
             hiddenWord[i] = "_";
@@ -151,8 +154,6 @@ document.onkeyup = function (event) {
         //print the hidden word and the picture clue to the page
         document.querySelector("#word").innerHTML = hiddenWord.join(" ");
         document.querySelector("#image").appendChild(picture);
-
-
     }
 }
 
