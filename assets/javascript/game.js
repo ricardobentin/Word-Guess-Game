@@ -38,7 +38,8 @@ var computerChoice = [];
 var wins = 0;
 var losses = 0;
 var guessesLeft = 9;
-var guessedLetters = [];
+var hiddenWord = [];
+
 //logic for the computer to guess between the items in wordClues and PictureClues arrays randomly
 var computerGuess = Math.floor(Math.random() * pictureClues.length);
 computerChoice.push(computerGuess);
@@ -51,44 +52,34 @@ picture = pictureClues[computerChoice];
 
 //for loop to get the length of the word and replace it with a _ - THIS MIGHT BE MORE COMPLICATED
 for (var i = 0; i < word.length; i++) {
-    var hiddenWord = '_'.repeat(word.length).split('');
     hiddenWord[i] = "_";
 }
+
+var remainingLetters = word.length;
+
 //print the hidden word and the picture clue to the page
 document.querySelector("#word").innerHTML = hiddenWord.join(" ");
 document.querySelector("#image").appendChild(picture);
 
-
 //capture the user's letters in a variable
-document.onkeyup = function (event) {
-    // Determine which key is pressed and store it in a variable called userGuess
-    var userGuess = event.key;
-    // Store userGuess in an array called guessedLetters via the push method
-    guessedLetters.push(userGuess);
-    //print guessed letters to the div id playerGuesses in HTML
-    console.log("Guessed letter:",guessedLetters);
-    console.log(guessedLetters.length);
-    console.log(hiddenWord);
-
-    for (var h = 0; h < guessedLetters.length; h++) {
-        console.log(guessedLetters[h]);
-        console.log(hiddenWord);
-        if (word.includes(guessedLetters[h])) {
-            word.split("").forEach(function (letter, index) {
-                if (letter === guessedLetters[h]) {
-                    hiddenWord = hiddenWord.splice(index, 1, letter);
-                    console.log(hiddenWord);
+// while (remainingLetters > 0) {
+ 
+    document.onkeyup = function (event) {
+        // Determine which key is pressed and store it in a variable called userGuess
+        var userGuess = event.key;
+            for (var h = 0; h < word.length; h++) {
+                if (word[h] === userGuess) {
+                    hiddenWord[h] = userGuess;
+                    remainingLetters--;
                 }
-            })
-
-        }
+            }
+            //print the hidden word and the picture clue to the page
+            document.querySelector("#word").innerHTML = hiddenWord.join(" ");
+            document.querySelector("#image").appendChild(picture);
+            if (remainingLetters === 0)
+                alert("Congratulations! The Flag is from "+word);
+                //reset logic
+                
+            
     }
-    //print the hidden word and the picture clue to the page
-    document.querySelector("#word").innerHTML = hiddenWord.join("");
-}
-
-
-//What's left to write:
-
-//Need to figure out how to evaluate each character in the word variable and see if the users has guessed that letter
-//
+// }
