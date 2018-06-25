@@ -36,9 +36,14 @@ var word;
 var picture;
 var computerChoice = [];
 var wins = 0;
-var losses = 0;
 var guessesLeft = 9;
 var hiddenWord = [];
+var guessedLetters = [];
+
+//print wins, guessesLeft and guessedLetters to page
+document.querySelector("#wins").innerHTML = "Wins: " + wins;
+document.querySelector("#guesses").innerHTML = "Guesses Left: " + guessesLeft;
+document.querySelector("#guessedLetters").innerHTML = "So far, you have guessed: " + guessedLetters;
 
 //logic for the computer to guess between the items in wordClues and PictureClues arrays randomly
 var computerGuess = Math.floor(Math.random() * pictureClues.length);
@@ -50,11 +55,11 @@ word = wordClues[computerChoice];
 picture = pictureClues[computerChoice];
 
 
-//for loop to get the length of the word and replace it with a _ - THIS MIGHT BE MORE COMPLICATED
+//for loop to get the length of the word and replace it with a _
 for (var i = 0; i < word.length; i++) {
     hiddenWord[i] = "_";
 }
-
+//variable to track how many letters remain to be guessed by user
 var remainingLetters = word.length;
 
 //print the hidden word and the picture clue to the page
@@ -62,24 +67,92 @@ document.querySelector("#word").innerHTML = hiddenWord.join(" ");
 document.querySelector("#image").appendChild(picture);
 
 //capture the user's letters in a variable
-// while (remainingLetters > 0) {
- 
-    document.onkeyup = function (event) {
-        // Determine which key is pressed and store it in a variable called userGuess
-        var userGuess = event.key;
-            for (var h = 0; h < word.length; h++) {
-                if (word[h] === userGuess) {
-                    hiddenWord[h] = userGuess;
-                    remainingLetters--;
-                }
-            }
-            //print the hidden word and the picture clue to the page
-            document.querySelector("#word").innerHTML = hiddenWord.join(" ");
-            document.querySelector("#image").appendChild(picture);
-            if (remainingLetters === 0)
-                alert("Congratulations! The Flag is from "+word);
-                //reset logic
-                
-            
+document.onkeyup = function (event) {
+    // Determine which key is pressed and store it in a variable called userGuess
+    var userGuess = event.key;
+    guessedLetters.push(userGuess);
+    //show to the user what they have guessed so far.
+    document.querySelector("#guessedLetters").innerHTML = "So far, you have guessed: " + guessedLetters;
+    //for loop to cycle through the entire word to see if they user has guessed any of the contained letters. This will also decrement remainingLetters.
+    for (var h = 0; h < word.length; h++) {
+        if (word[h] === userGuess) {
+            hiddenWord[h] = userGuess;
+            remainingLetters--;
+        }
     }
-// }
+    //print the hidden word and the picture clue to the page so that the user gets feedback on what's left to guess.
+    document.querySelector("#word").innerHTML = hiddenWord.join(" ");
+    document.querySelector("#image").appendChild(picture);
+    //Conditional for wins!
+    if (remainingLetters === 0 && guessesLeft > 0) {
+        wins++;
+        document.querySelector("#wins").innerHTML = "Wins: " + wins;
+        //reset game
+
+        //logic for the computer to guess between the items in wordClues and PictureClues arrays randomly
+        computerGuess = Math.floor(Math.random() * pictureClues.length);
+        computerChoice.push(computerGuess);
+
+        //set the wordclues and pictureClues to the index set by computerGuess
+
+        word = wordClues[computerChoice];
+        picture = pictureClues[computerChoice];
+
+
+        //for loop to get the length of the word and replace it with a _
+        for (var i = 0; i < word.length; i++) {
+            hiddenWord[i] = "_";
+        }
+        //variable to track how many letters remain to be guessed by user
+        remainingLetters = word.length;
+
+        //print the hidden word and the picture clue to the page
+        document.querySelector("#word").innerHTML = hiddenWord.join(" ");
+        document.querySelector("#image").appendChild(picture);
+
+    }
+    //conditional to decrement guesses
+    else if (remainingLetters !== 0 && guessesLeft > 1) {
+        guessesLeft--;
+        document.querySelector("#guesses").innerHTML = "Guesses Left: " + guessesLeft;
+    }
+    else {
+        alert("I'm sorry, You did not guess correctly. Press OK to play again!")
+        //clear the page
+        document.querySelector("#word").innerHTML="";
+        document.querySelector("#image").removeChild(picture);
+        //clear variables
+        computerChoice = [];
+        wins = 0;
+        guessesLeft = 9;
+        hiddenWord = [];
+        guessedLetters = [];
+        remainingLetters = 0
+        remainingLetters = 0
+        document.querySelector("#guesses").innerHTML = "Guesses Left: " + guessesLeft;
+        document.querySelector("#guessedLetters").innerHTML = "So far, you have guessed: " + guessedLetters;
+
+        //logic for the computer to guess between the items in wordClues and PictureClues arrays randomly
+        computerGuess = Math.floor(Math.random() * pictureClues.length);
+        computerChoice.push(computerGuess);
+
+        //set the wordclues and pictureClues to the index set by computerGuess
+
+        word = wordClues[computerChoice];
+        picture = pictureClues[computerChoice];
+
+
+        //for loop to get the length of the word and replace it with a _
+        for (var i = 0; i < word.length; i++) {
+            hiddenWord[i] = "_";
+        }
+        //variable to track how many letters remain to be guessed by user
+        remainingLetters = word.length;
+        //print the hidden word and the picture clue to the page
+        document.querySelector("#word").innerHTML = hiddenWord.join(" ");
+        document.querySelector("#image").appendChild(picture);
+
+
+    }
+}
+
